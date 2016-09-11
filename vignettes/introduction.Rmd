@@ -45,10 +45,11 @@ myData <- getData(table, BEVÆGELSEV=c(18),Tid=c("2015M01","2015M02","2015M03","
 ```
 
 You can see all the possible values for all variables in the table object.
-All the variables with descriptions are available there.
+By running `table$values`
 
 ```{r}
-table$values
+# Here wrapped in str() to avoid long output
+str(table$values)
 ```
 
 ## Advanced variable selection
