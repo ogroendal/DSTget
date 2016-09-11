@@ -71,7 +71,7 @@ without specifically typing them in.
 
 ```{r}
 table <- DSTget("HFUDD10")
-myData <- getData(table, ALDER=c("15-19"), startDate = as.Date("2015-01-01"), fillRemaining=T)
+myData <- getData(table, ALDER=c("15-19"), KØN = c('K'), startDate = as.Date("2015-01-01"), fillRemaining=T)
 ```
 
 ## Date variables
