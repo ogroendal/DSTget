@@ -1,0 +1,9 @@
+inst/doc
+vignettes/*.R
+*.swp
+NAMESPACE
+.Rbuildignore
+.Rhistory
+.Rproj.user/
+man/*
+vignettes/.build.timestamp

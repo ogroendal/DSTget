@@ -1,0 +1,18 @@
+Package: DSTget
+Type: Package
+Title: Wrapper for Statistics Denmark API
+Version: 0.1.0
+Authors@R: person("Olav", "Groendal", email = "ogroendal@gmail.com",role = c("aut", "cre"))
+Description: Wrapper for Statistics Denmark API
+License: CC0
+LazyData: TRUE
+Imports:
+    httr (>= 1.2.1),
+    jsonlite (>= 1.0),
+    magrittr (>= 1.0)
+Suggests:
+    testthat (>= 1.0.0),
+    knitr,
+    rmarkdown
+RoxygenNote: 5.0.1
+VignetteBuilder: knitr

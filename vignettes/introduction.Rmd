@@ -1,0 +1,91 @@
+---
+title: "Introduction to DSTget"
+author: "Olav Grøndal"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+DSTget is a small wrapper around the Statistics Denmark statbank API. It allows for easy import of all tables from the statbank.
+It has the following features.
+
+* Variable selection and user input checking
+* Circumvention of standard download limit of the statbank
+* Conversion of statistical timeperiods to date
+* Easy conversion to R data.frame
+
+## Getting table meta data
+
+To get started download the metadata of a table into a table object by using the `DSTget` function.
+```{r}
+table <- DSTget("BEV3C")
+```
+This above command download all the metadat of the table, this can be used as input for the getData function.
+You can also use `summary` to get a description of the table metadata.
+
+```{r}
+summary(table)
+```
+
+## Downloading table data
+For some table you can simply download them in their entirety by passing the meta data object to the getData function.
+
+```{r}
+myData <- getData(table)
+```
+
+Sometimes you want only a subset of variables or time periods, or the table might be too big to be downloaded in its
+entirety. You can then select the correct variables by choosing what levels of the categorical values you want to include.
+
+```{r}
+myData <- getData(table, BEVÆGELSEV=c(18),Tid=c("2015M01","2015M02","2015M03","2015M04"))
+```
+
+You can see all the possible values for all variables in the table object.
+All the variables with descriptions are available there.
+
+```{r}
+table$values
+```
+
+## Advanced variable selection
+
+There are a few extra options for selecting your data.
+
+* Using R dates
+* Using fillRemaining
+
+The first option lets you use the startDate and endDate parameters to select time periods.
+
+```{r}
+myData <- getData(table, BEVÆGELSEV=c(18), startDate = as.Date("2012-01-01"))
+```
+This will get all timeperiods from the startDate, I can specify a range by including both startDate and endDate, or only have an endDate to get historic data.
+
+The other option is `fillRemaining` which lets you get all levels of all the variables you dont mention.
+You might only care about 15 to 19 year olds in the highest completed education table (HFUDD10), but you want all other variables to be included
+without specifically typing them in.
+
+```{r}
+table <- DSTget("HFUDD10")
+myData <- getData(table, ALDER=c("15-19"), startDate = as.Date("2015-01-01"), fillRemaining=T)
+```
+
+## Date variables
+All tables from the statbank use statistical periods, like 2015M01 ie. the first month of 2015.
+DSTget conveniently provides an R start and end date for each period, making it easy
+to construct time series and sort and use the data in other ways.
+
+## Downloading very large tables
+By default the statbank gives you an error if you ask for tables above 100.000 rows.
+DSTget will give you an error if you specify such a request. However - if you
+set the `splitLarge` argument to TRUE, then DSTget will split up your request for you
+and let you download the table (this might take a while).
+
+```{r}
+table <- DSTget("FOLK1A")
+myData <- getData(table, ALDER = c(0:6), fillRemaining=T,startDate = as.Date("2010-01-01"), splitLarge=T)
+```
