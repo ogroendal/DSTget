@@ -1,7 +1,8 @@
 #' Retrieve table metadata
 #' 
 #' @export
-#' @importFrom httr content POST
+#' @importFrom httr content
+#' @importFrom httr POST
 #' @importFrom jsonlite fromJSON
 #' @param tablename A string giving the name of the table
 #' @param language A string giving the language used, "en" is suggested
