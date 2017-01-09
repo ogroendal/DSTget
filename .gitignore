@@ -4,6 +4,5 @@ vignettes/*.R
 .Rbuildignore
 .Rhistory
 .Rproj.user/
-man/*
 vignettes/.build.timestamp
 .Rproj.user
