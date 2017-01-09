@@ -1,4 +1,3 @@
-
 parseArgs <- function(table,args, fillRemaining=T, startDate=NA, endDate=NA){
     # table is an object of class DSTget
 

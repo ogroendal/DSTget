@@ -1,6 +1,8 @@
 #' Retrieve table metadata
 #' 
 #' @export
+#' @importFrom httr content POST
+#' @importFrom jsonlite fromJSON
 #' @param tablename A string giving the name of the table
 #' @param language A string giving the language used, "en" is suggested
 #' @return A table object - which is a list of all metadata

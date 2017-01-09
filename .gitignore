@@ -7,3 +7,4 @@ NAMESPACE
 .Rproj.user/
 man/*
 vignettes/.build.timestamp
+.Rproj.user

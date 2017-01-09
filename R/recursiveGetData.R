@@ -2,6 +2,7 @@
 ## in the case that the desired rownumber exceeds the 
 ## limit set by DST.
 
+#' @importFrom data.table rbindlist
 recursiveGetData <- function(table, args, labelFactors, fillRemaining, startDate, endDate, splitLarge){
 
     ## Identify the variable that gets us the split closest to 100.000 row
@@ -31,5 +32,5 @@ recursiveGetData <- function(table, args, labelFactors, fillRemaining, startDate
                                splitLarge = splitLarge)
     }
 
-    return(data.table::rbindlist(frames))
+    return(rbindlist(frames))
 }

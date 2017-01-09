@@ -18,6 +18,10 @@ It has the following features.
 * Easy conversion to R data.frame
 
 ## Getting table meta data
+First load the package
+```{r}
+library(DSTget)
+```
 
 To get started download the metadata of a table into a table object by using the `DSTget` function.
 ```{r}

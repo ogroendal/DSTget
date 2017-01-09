@@ -1,6 +1,8 @@
-### Here we define the classes for DSTget and its constructor
-
 #' Get the actual data using the meta data object.
+#'
+#' @export
+#' @importFrom magrittr %>%
+#' @importFrom httr POST content
 #' @param table This is a table object from the DSTget function, it contain metadata.
 #' @param fillRemaining A boolean - if true then all values, in variables that are not
 #' explicitly mentioned, will be selected (as opposed to none).
@@ -8,10 +10,10 @@
 #' their full statbank text. A 'U' value in BEC3V will become 'Ugift'.
 #' @param startDate An R date - all periods before this will not be downloaded.
 #' @param endDate An R date - all periods after this will not be downloaded.
+#' @param splitLarge Allows you to download tablers larger than the default DST limit
 #' @examples
-#' tab <- DSTget("BEV3C"):
+#' tab <- DSTget("BEV3C")
 #' dat <- getData(tab, fillRemaining=T)
-#' @export
 getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, endDate=NA, splitLarge=F){
 
     ## The variable selections gets tranformed to a list of arguments
