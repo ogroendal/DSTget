@@ -13,8 +13,8 @@ parseArgs <- function(table,args, fillRemaining=T, startDate=NA, endDate=NA){
     if(length(args) == 0){
         args <- lapply(table$values, (function(x) x$id))
     } else if(fillRemaining & length(args) < length(table$variables$id)){
-	# Here we take the variables that where not mentioned in the args
-	# And give them a * marker for all values if fillRemain is true
+	      # Here we take the variables that where not mentioned in the args
+      	# And give them a * marker for all values if fillRemain is true
         remain <- lapply(table$values, (function(x) x$id))
         remain <- remain[!(names(remain) %in% names(args))]
         args <- append(args, remain)
@@ -26,11 +26,9 @@ parseArgs <- function(table,args, fillRemaining=T, startDate=NA, endDate=NA){
     ## Below we check the numeric time arguments,
     ## and if they are not given we return current time, unaffected
     args[['Tid']] <- selectNumericTime(table, startDate,endDate, args)
-    
 
-    ## Preventing encoding errors
-    argNames <- iconv(argNames, to = "UTF-8")
-    ids <- iconv(table$variable$id, to = "UTF-8")
+    ## Getting all variable ids
+    ids <- table$variables$id
 
     ## Check if all the given arguments besides the table name is actually variable IDs
     if(!(sum(argNames %in% ids) == length(argNames))){

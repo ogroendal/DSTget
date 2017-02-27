@@ -17,7 +17,8 @@
 getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, endDate=NA, splitLarge=F){
 
     ## The variable selections gets tranformed to a list of arguments
-    argList <- list(...)
+    ## We also mae sure that there are no encoding problems
+    argList <- fixArgEncoding(list(...))
 
     ## If getData is called by recursiveGetData
     ## Then the value spec will already be in a list called Args
@@ -31,7 +32,7 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
         fillRemaing = T
     }
 
-    args <- parseArgs(table,args = argList, fillRemaining, startDate, endDate)
+    args <- parseArgs(table, args = argList, fillRemaining, startDate, endDate)
     argNames <- names(args)
 
     ## Check if the user has forgotten to give essential arguments
@@ -60,20 +61,23 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     variables <- vector('list',length(args))
     varnames <- names(args)
     for(i in seq_along(args)){
-        x <- list(code = iconv(varnames[i]), values = as.list(args[[i]]))
+        x <- list(code = varnames[i], values = as.list(args[[i]]))
         variables[[i]] <- x
     }
 
     body <- list(table = table$id, format='CSV', valuePresentation='Code', delimiter='Semicolon',
                  variables = variables)
 
+    #print(body)
+
     ## Get the data
     result <- POST(url=dataUrl,encode='json',body=body)
 
     ## Parse the data
     result_body <- content(result,'text',encoding='UTF-8')
-    x <- textConnection(result_body)
-    dat <- read.table(x,sep=";",header=T)
+    result_body <- sub("\uFEFF","" , result_body) ## Remove UTF-8 BOM - this seems to be nessecary on some windows installations
+    x <- textConnection(result_body, encoding="bytes")
+    dat <- read.table(x,sep=";",header=T, encoding="UTF-8")
 
     ## Convert all numerically encoded factor variables to R factors
     if(labelFactors){

@@ -11,5 +11,5 @@ test_that("Check that non-numerically encoded variables are correctly formed fac
     hand2 <- DSTget('HAND02')
     hand2dat <- getData(hand2, Tid=c("2015K3"), fillRemaining=T, labelFactors=T)
     expect_that(hand2dat$UDDANNELSE, is_a('factor'))
-    expect_that(sum(grepl('',levels(hand2dat$UDDANNELSE))) > 0, equals(T)) 
+    expect_that(sum(grepl('',levels(hand2dat$UDDANNELSE))) > 0, equals(T))
 })

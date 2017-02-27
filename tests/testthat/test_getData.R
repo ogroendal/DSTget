@@ -16,7 +16,7 @@ test_that("Standard selection works - with no fillRemaining",{
 test_that("Check that one can select date with numeric time values,
           And that these do not interfere with the other arguments", {
     table <- DSTget('BEV3C')
-    BEVdata <- getData(table, startDate=as.Date("2015-01-01"), endDate=as.Date("2015-4-01"))
+    BEVdata <- getData(table, startDate=as.Date("2015-01-01"), endDate=as.Date("2015-4-01"),fillRemaining = T)
     expect_that(sum(unique(BEVdata$TID) %in% c("2015M01", "2015M02", "2015M03", "2015M04")), equals( 4))
 })
 
@@ -27,9 +27,3 @@ test_that("Check that the user gets an error message
                 throws_error('*variables as a minimum*'))
 })
 
-test_that("The user can enter special characters in variable names
-          without receiving errors", {
-    table <- DSTget('BEV3C')
-    myData <- getData(table, BEVÆGELSEV = c(18), startDate = as.Date("2014-01-01"))
-    expect_that(myData$BEVÆGELSEV[1], equals(18))
-})

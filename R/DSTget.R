@@ -1,8 +1,7 @@
 #' Retrieve table metadata
-#' 
+#'
 #' @export
-#' @importFrom httr content
-#' @importFrom httr POST
+#' @importFrom httr content POST
 #' @importFrom jsonlite fromJSON
 #' @param tablename A string giving the name of the table
 #' @param language A string giving the language used, "en" is suggested
@@ -52,7 +51,7 @@ DSTget <- function(tablename,language = 'en'){
 }
 
 #' Describe the retrieved table metadata
-#' 
+#'
 #' @export
 #' @param table The R object holding the table information
 #' @return Prints description to console
