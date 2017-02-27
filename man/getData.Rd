@@ -10,6 +10,8 @@ getData(table, ..., labelFactors = F, fillRemaining = F, startDate = NA,
 \arguments{
 \item{table}{This is a table object from the DSTget function, it contain metadata.}
 
+\item{...}{Give all variable selections as arguments. Forexample write Tid = c("2015M01", "2015M02") and ALDER  = c(0,1,2,3)}
+
 \item{labelFactors}{A boolean - if true then the factor levels will be renamed to
 their full statbank text. A 'U' value in BEC3V will become 'Ugift'.}
 
@@ -20,7 +22,7 @@ explicitly mentioned, will be selected (as opposed to none).}
 
 \item{endDate}{An R date - all periods after this will not be downloaded.}
 
-\item{splitLarge}{Allows you to download tablers larger than the default DST limit}
+\item{splitLarge}{Allows you to download tablers larger than the default DST limit of 100.000 rows}
 }
 \description{
 Get the actual data using the meta data object.

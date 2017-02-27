@@ -9,4 +9,7 @@ fixArgEncoding(args)
 \arguments{
 \item{args}{The ... arguements from getData}
 }
+\description{
+This function check if any encodings are explicitly given as latin1 and then convert to UTF8
+}
 

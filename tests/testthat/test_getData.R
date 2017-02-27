@@ -13,6 +13,12 @@ test_that("Standard selection works - with no fillRemaining",{
     expect_that(nrow(fodData), equals( 2 * 2 * 3 ))
 })
 
+test_that("Selecting several variables work with fillRemaining and a numeric time", {
+    MyTableObject <- DSTget("FOLK1A")
+    MyDataFrame <- getData(MyTableObject, CIVILSTAND = c("F", "G"), ALDER = c(1,2,3,4), startDate = as.Date("2016-01-01") , fillRemaining = T)
+    expect_true(nrow(MyDataFrame) > 100)
+})
+
 test_that("Check that one can select date with numeric time values,
           And that these do not interfere with the other arguments", {
     table <- DSTget('BEV3C')

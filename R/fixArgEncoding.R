@@ -1,4 +1,5 @@
 #' @title fixArgEncoding
+#' @description This function check if any encodings are explicitly given as latin1 and then convert to UTF8
 #' @name fixArgEncoding
 #' @param args The ... arguements from getData
 #' @importFrom magrittr %>%

@@ -45,12 +45,14 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
 
     nums <- lapply(args, length) %>% unlist %>% prod
     if(nums > 100000 & !splitLarge){
-        stop('You have chosen a combination of variables that will yields more than 100000 rows,
-             hitting the limit by set by DST, reduce the number of chosen values')
+        stop(sprintf('You have chosen a combination of variables that will yield %s rows,
+             hitting the limit by set by the DST API of 100.000 rows,
+             reduce the number of chosen values or use the splitLarge argument', nums))
     } else if (nums > 100000 & splitLarge){
         ## Here we call a function that calls getData recursively to split the download process
         ## StartDate and endDate is set to NA as we dont need to process those more than ones
-        recursiveGetData(table, args, labelFactors, fillRemaining = F, startDate=NA, endDate = NA, splitLarge)
+        recursiveGetData(table, args, labelFactors, fillRemaining = F,
+                         startDate=NA, endDate = NA, splitLarge)
     }
 
     ## Construct the call for the data
