@@ -21,7 +21,7 @@ DSTget <- function(tablename,language = 'en'){
     ## Check if what was returned was a legitimate tablename
     if('message' %in% names(metadata)){
         m <- metadata$message
-        if(grepl("Kunne ikke finde tabellen",m)){
+        if(grepl("findes ikke",m)){
             stop('Your table reference could not be found by DST')
         }
     }
