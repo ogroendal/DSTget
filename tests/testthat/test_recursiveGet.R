@@ -9,6 +9,8 @@ test_that("Recursive get works - on a small table", {
 
 test_that("Recursive get works - on a large table called directly from getData" , {
     table <- DSTget("FOLK1A")
-    myData <- getData(table, ALDER = c(0:6), fillRemaining=T,startDate = as.Date("2010-01-01"), splitLarge=T)
-    expect_that(myData$ALDER[1], equals(0))
+    myData2 <- getData(table, ALDER = c(0:4), labelFactors=F , fillRemaining=T, startDate = as.Date("2010-01-01"), splitLarge=T)
+    expect_that(myData2$ALDER[1], equals(0))
+    myData3 <- getData(table, ALDER = c(0:6), labelFactors=F , fillRemaining=T, startDate = as.Date("2010-01-01"), splitLarge=T)
+    expect_that(myData3$ALDER[1], equals(0))
 })

@@ -1,6 +1,8 @@
 #' Get the actual data using the meta data object.
 #'
 #' @export
+#' @name getData
+#' @title getData
 #' @importFrom magrittr %>%
 #' @importFrom httr POST content
 #' @param table This is a table object from the DSTget function, it contain metadata.
@@ -10,7 +12,8 @@
 #' their full statbank text. A 'U' value in BEC3V will become 'Ugift'.
 #' @param startDate An R date - all periods before this will not be downloaded.
 #' @param endDate An R date - all periods after this will not be downloaded.
-#' @param splitLarge Allows you to download tablers larger than the default DST limit
+#' @param splitLarge Allows you to download tablers larger than the default DST limit of 100.000 rows
+#' @param ... Give all variable selections as arguments. Forexample write Tid = c("2015M01", "2015M02") and ALDER  = c(0,1,2,3)
 #' @examples
 #' tab <- DSTget("BEV3C")
 #' dat <- getData(tab, fillRemaining=T)
@@ -20,28 +23,22 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     ## We also mae sure that there are no encoding problems
     argList <- fixArgEncoding(list(...))
 
-    ## If getData is called by recursiveGetData
-    ## Then the value spec will already be in a list called Args
-    if("args" %in% names(argList)){
-        argList <- argList[["args"]]
-    }
-
     ## Normally fillRemaining is false, but if no other args are given
     ## it is set to True, as we then expect the user to want all data.
     if(length(argList) == 0){
-        fillRemaing = T
+      fillRemaing = T
     }
 
-    args <- parseArgs(table, args = argList, fillRemaining, startDate, endDate)
+    ## If getData is called by recursiveGetData
+    ## Then the value spec will already be in a list called Args
+    ## If it is not we will parse the argument list
+    if("args" %in% names(argList)){
+      args <- argList[["args"]]
+    } else {
+      args <- parseArgs(table, args = argList, fillRemaining, startDate, endDate)
+    }
+
     argNames <- names(args)
-
-    ## Check if the user has forgotten to give essential arguments
-    essentialArgs <- table$variables[table$variables$elimination == F,]$id
-    if(sum(essentialArgs %in% argNames) < length(essentialArgs)){
-         stop(paste('You need to have selected one or more values
-                    from the following variables as a minimum :',
-                    paste(essentialArgs,collapse=" "),sep=" "))
-    }
 
     ## Check if the user has selected too many combinations of data exceeding
     ## the 100000 number limit set by DST
@@ -53,7 +50,7 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     } else if (nums > 100000 & splitLarge){
         ## Here we call a function that calls getData recursively to split the download process
         ## StartDate and endDate is set to NA as we dont need to process those more than ones
-        recursiveGetData(table, args, labelFactors, fillRemaining, startDate=NA, endDate = NA, splitLarge)
+        recursiveGetData(table, args, labelFactors, fillRemaining = F, startDate=NA, endDate = NA, splitLarge)
     }
 
     ## Construct the call for the data

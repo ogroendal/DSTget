@@ -35,5 +35,14 @@ parseArgs <- function(table,args, fillRemaining=T, startDate=NA, endDate=NA){
         stop('It appears as if you gave an argument that does not correspond
              to a variable ID or the time variable')
     }
+
+    ## Check if the user has forgotten to give essential arguments
+    essentialArgs <- table$variables[table$variables$elimination == F,]$id
+    if(!all(essentialArgs %in% names(args))){
+      stop(paste('You need to have selected one or more values
+                    from the following variables as a minimum :',
+                 paste(essentialArgs,collapse=" "),sep=" "))
+    }
+
     return(args)
 }

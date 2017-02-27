@@ -26,4 +26,3 @@ test_that("Check that the user gets an error message
     expect_that(BEVdata <- getData(table,Tid=c('*'), fillRemaining=F),
                 throws_error('*variables as a minimum*'))
 })
-

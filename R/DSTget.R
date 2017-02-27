@@ -1,6 +1,8 @@
 #' Retrieve table metadata
 #'
 #' @export
+#' @name DSTget
+#' @title DSTget
 #' @importFrom httr content POST
 #' @importFrom jsonlite fromJSON
 #' @param tablename A string giving the name of the table

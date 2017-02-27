@@ -2,7 +2,7 @@
 % Please edit documentation in R/getData.R
 \name{getData}
 \alias{getData}
-\title{Get the actual data using the meta data object.}
+\title{getData}
 \usage{
 getData(table, ..., labelFactors = F, fillRemaining = F, startDate = NA,
   endDate = NA, splitLarge = F)

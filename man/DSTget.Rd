@@ -2,7 +2,7 @@
 % Please edit documentation in R/DSTget.R
 \name{DSTget}
 \alias{DSTget}
-\title{Retrieve table metadata}
+\title{DSTget}
 \usage{
 DSTget(tablename, language = "en")
 }

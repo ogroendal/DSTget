@@ -1,8 +1,9 @@
 ## recursiveGetData is a function that is called by getData
-## in the case that the desired rownumber exceeds the 
+## in the case that the desired rownumber exceeds the
 ## limit set by DST.
 
 #' @importFrom data.table rbindlist
+#' @importFrom magrittr %>%
 recursiveGetData <- function(table, args, labelFactors, fillRemaining, startDate, endDate, splitLarge){
 
     ## Identify the variable that gets us the split closest to 100.000 row
@@ -12,7 +13,8 @@ recursiveGetData <- function(table, args, labelFactors, fillRemaining, startDate
     argLengths <- lapply(args, length) %>% unlist
     totalRows <- prod(argLengths)
     downSize <- ceiling(totalRows / argLengths)
-    topArg <- names(args)[which.min(abs(downSize - 100000))] 
+    ## It must be an argument with more than 1 remaning value
+    topArg <- abs(downSize[argLengths > 1] - 100000) %>% which.min %>% names
 
     ## Get the levels
     topArgVals <- args[[topArg]]

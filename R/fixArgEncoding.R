@@ -1,3 +1,5 @@
+#' @title fixArgEncoding
+#' @name fixArgEncoding
 #' @param args The ... arguements from getData
 #' @importFrom magrittr %>%
 fixArgEncoding <- function(args){
