@@ -76,7 +76,12 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     result_body <- content(result,'text',encoding='UTF-8')
     result_body <- sub("\uFEFF","" , result_body) ## Remove UTF-8 BOM - this seems to be nessecary on some windows installations
     x <- textConnection(result_body, encoding="bytes")
-    dat <- read.table(x,sep=";",header=T, encoding="UTF-8")
+
+    ## Create data.frame from data, and give the correct colClasses from the metadata
+    rcc <- table$colClasses[names(table$colClasses) %in% argNames]
+    names(rcc) <- toupper(names(rcc))
+    dat <- read.table(x,sep=";",header=T, encoding="UTF-8",
+                      colClasses = rcc)
 
     ## Convert all numerically encoded factor variables to R factors
     if(labelFactors){

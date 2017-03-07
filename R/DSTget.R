@@ -47,6 +47,9 @@ DSTget <- function(tablename,language = 'en'){
     timeranges <- parseTime(timeValues$id)
     me[['timeranges']] <- timeranges
 
+    ## Add classification of colClasses
+    me <- classifyColClasses(me)
+
     ## Return the finished table object
     class(me) <- 'DSTget'
     return(me)
