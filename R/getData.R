@@ -14,10 +14,11 @@
 #' @param endDate An R date - all periods after this will not be downloaded.
 #' @param splitLarge Allows you to download tablers larger than the default DST limit of 100.000 rows
 #' @param ... Give all variable selections as arguments. Forexample write Tid = c("2015M01", "2015M02") and ALDER  = c(0,1,2,3)
+#' @param giveRDates Include the start and end time of periods, as R dates, directly with the data - they are also available in the metadata table - so this simply saves you a join operation.
 #' @examples
 #' tab <- DSTget("BEV3C")
 #' dat <- getData(tab, fillRemaining=T)
-getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, endDate=NA, splitLarge=F){
+getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, endDate=NA, splitLarge=F, giveRDates = F){
 
     ## The variable selections gets tranformed to a list of arguments
     ## We also mae sure that there are no encoding problems
@@ -100,6 +101,11 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
 		     dat[,i] <- as.character(dat[,i])
 		}
 	    }
+    }
+
+    ## Include the R Dates
+    if(giveRDates){
+        dat <- merge(dat, table$timeranges, by.x="TID", by.y  = "ch")
     }
 
     ## Return results as a dataframe.

@@ -6,6 +6,15 @@ DSTget makes it easy to download Statistics Denmark (DST) data
 straight into R and keep them updated. Its an interface to the
 flexible DST API.
 
+## How to install?
+The package is not on CRAN, but can be installed directly from
+github.
+
+```R
+library(devtools)
+install_github("ogroendal/DSTget")
+```
+
 ## Features
 DSTget has the following features:
 

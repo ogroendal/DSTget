@@ -5,7 +5,7 @@
 \title{getData}
 \usage{
 getData(table, ..., labelFactors = F, fillRemaining = F, startDate = NA,
-  endDate = NA, splitLarge = F)
+  endDate = NA, splitLarge = F, giveRDates = F)
 }
 \arguments{
 \item{table}{This is a table object from the DSTget function, it contain metadata.}
@@ -23,6 +23,8 @@ explicitly mentioned, will be selected (as opposed to none).}
 \item{endDate}{An R date - all periods after this will not be downloaded.}
 
 \item{splitLarge}{Allows you to download tablers larger than the default DST limit of 100.000 rows}
+
+\item{giveRDates}{Include the periods as R dates directly on the data - they are also available in the metadata table - so this simply saves you a join operation.}
 }
 \description{
 Get the actual data using the meta data object.
