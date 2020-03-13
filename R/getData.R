@@ -42,20 +42,14 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     argNames <- names(args)
 
     ## Check if the user has selected too many combinations of data exceeding
-    ## the 100000 number limit set by DST
+    ## the 100000 number limit set by DST and if they have set format to BULK
 
     nums <- lapply(args, length) %>% unlist %>% prod
-    if(nums > 100000 & !splitLarge){
-        stop(sprintf('You have chosen a combination of variables that will yield %s rows,
-             hitting the limit by set by the DST API of 100.000 rows,
-             reduce the number of chosen values or use the splitLarge argument', nums))
-    } else if (nums > 100000 & splitLarge){
-        ## Here we call a function that calls getData recursively to split the download process
-        ## StartDate and endDate is set to NA as we dont need to process those more than ones
-        recursiveGetData(table, args, labelFactors, fillRemaining = F,
-                         startDate=NA, endDate = NA, splitLarge)
+    if(nums > 100000){
+        format <- "BULK"
+    } else {
+        format <- "CSV"
     }
-
     ## Construct the call for the data
     dataUrl <- 'http://api.statbank.dk/v1/data'
     variables <- vector('list',length(args))
@@ -81,8 +75,8 @@ getData <- function(table,...,labelFactors=F, fillRemaining=F, startDate=NA, end
     ## Create data.frame from data, and give the correct colClasses from the metadata
     rcc <- table$colClasses[names(table$colClasses) %in% argNames]
     names(rcc) <- toupper(names(rcc))
-    dat <- read.table(x,sep=";",header=T, encoding="UTF-8",
-                      colClasses = rcc)
+    dat <- read.table(x, sep=";", dec = ",", na.strings = "..",
+                      header=T, encoding="UTF-8", colClasses = rcc)
 
     ## Convert all numerically encoded factor variables to R factors
     if(labelFactors){
